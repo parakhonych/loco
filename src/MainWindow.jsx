@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 export default function MainWindow() {
   const [activeMenu, setActiveMenu] = useState(null);
   const [selectedMode, setSelectedMode] = useState('btn11');
-  const [selectedModeSub, setSelectedModeSub] = useState('option1'); // default sub-mode
+  const [selectedModeSub, setSelectedModeSub] = useState('option1');
+  const [results, setResults] = useState([]);
   const btn1 = menuData.menuMain[0];
   const btn2 = menuData.menuMain[1];
   const btn3 = menuData.menuMain[2];
@@ -224,8 +225,18 @@ export default function MainWindow() {
             </div>
           </section>
         </section>
-        <section className="bg-yellow-300 w-[30%] h-full flex justify-center items-center">
-          <p>Section 3 (40%)</p>
+        <section className="bg-gray-100 w-[30%] h-full flex justify-center items-center">
+          <div className="bg-gray-100 w-full h-full p-2 rounded-lg border border-gray-300 overflow-y-auto">
+            {results.length === 0 ? (
+              <p className="text-gray-400 text-xl item-right">No results yet</p>
+            ) : (
+              results.map((res, index) => (
+                <div key={index} className="text-xl font-mono text-center py-1">
+                  {res} mm
+                </div>
+              ))
+            )}
+          </div>
         </section>
       </div>
     </div>
