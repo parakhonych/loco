@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 
 export default function MainWindow() {
   const [activeMenu, setActiveMenu] = useState(null);
+  const [selectedMode, setSelectedMode] = useState('btn11');
+  const [selectedModeSub, setSelectedModeSub] = useState('option1'); // default sub-mode
   const btn1 = menuData.menuMain[0];
   const btn2 = menuData.menuMain[1];
   const btn3 = menuData.menuMain[2];
@@ -23,7 +25,7 @@ export default function MainWindow() {
       setActiveMenu(menuName);
     }
   };
-  
+
   const handleNumberClick = (num) => {
     setInput((prev) => prev + num);
   };
@@ -38,7 +40,6 @@ export default function MainWindow() {
 
   const handleOk = () => {
     console.log('Entered value:', input);
-    
   };
 
   return (
@@ -114,8 +115,42 @@ export default function MainWindow() {
         <section className="bg-white-300 w-[45%] h-full flex justify-center items-center">
           <section className="bg-white-300 w-full h-full flex flex-col p-4">
             {/* Top sub-section (40%) to display input */}
-            <div className="h-[40%] bg-white-200 rounded flex items-center justify-end text-2xl p-4">
-              {input}
+            <div className="flex flex-col h-[40%] w-full p-4 gap-4">
+              {/* Mode display */}
+              <div className="w-full h-[15%] flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow">
+                <span className="text-lg font-semibold">Mode:</span>
+                <span className="text-lg font-bold">{selectedMode}</span>
+              </div>
+              {/* Sub-mode radio buttons */}
+              <div className="h-[60%] flex flex-col gap-2">
+                <label className="flex-1 flex items-center space-x-2 text-xl bg-gray-200 p-3 rounded-lg cursor-pointer hover:bg-gray-300">
+                  <input
+                    type="radio"
+                    name="submode"
+                    value="option1"
+                    checked={selectedModeSub === 'option1'}
+                    onChange={() => setSelectedModeSub('option1')}
+                    className="w-6 h-6"
+                  />
+                  <span>Option 1</span>
+                </label>
+
+                <label className="flex-1 flex items-center space-x-2 text-xl bg-gray-200 p-3 rounded-lg cursor-pointer hover:bg-gray-300">
+                  <input
+                    type="radio"
+                    name="submode"
+                    value="option2"
+                    checked={selectedModeSub === 'option2'}
+                    onChange={() => setSelectedModeSub('option2')}
+                    className="w-6 h-6"
+                  />
+                  <span>Option 2</span>
+                </label>
+              </div>
+              {/* Display input from keypad - 20% */}
+              <div className="h-[20%] mt-2 text-2xl font-mono flex items-center justify-center">
+                Length: {input.padStart(4, '0')} mm
+              </div>
             </div>
 
             {/* Bottom sub-section (60%) keypad */}
