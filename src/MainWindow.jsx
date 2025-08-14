@@ -186,6 +186,12 @@ export default function MainWindow() {
                     {num}
                   </button>
                 ))}
+                <button
+                  className="bg-red-400 hover:bg-red-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
+                  onClick={handleClear}
+                >
+                  CLEAR
+                </button>
               </div>
 
               {/* Row 3: Numbers 7-9 */}
@@ -199,27 +205,23 @@ export default function MainWindow() {
                     {num}
                   </button>
                 ))}
-              </div>
-
-              {/* Row 4: Clear, 0, OK */}
-              <div className="grid grid-cols-4 gap-2 h-1/4">
-                <button
-                  className="bg-red-400 hover:bg-red-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
-                  onClick={handleClear}
-                >
-                  CLEAR
-                </button>
-                <button
-                  className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
-                  onClick={() => handleNumberClick('0')}
-                >
-                  0
-                </button>
                 <button
                   className="bg-green-400 hover:bg-green-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
                   onClick={handleOk}
                 >
                   OK
+                </button>
+              </div>
+
+              {/* Row 4:0*/}
+
+              <div className="grid grid-cols-4 gap-2 h-1/4">
+                <div className></div>
+                <button
+                  className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                  onClick={() => handleNumberClick('0')}
+                >
+                  0
                 </button>
               </div>
             </div>
