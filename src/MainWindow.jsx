@@ -14,6 +14,8 @@ export default function MainWindow() {
   const Button31 = menuData.subButtons['Button3'][0];
   const Button32 = menuData.subButtons['Button3'][1];
 
+  const [input, setInput] = useState('');
+
   const toggleMenu = (menuName) => {
     if (activeMenu === menuName) {
       setActiveMenu(null);
@@ -21,6 +23,24 @@ export default function MainWindow() {
       setActiveMenu(menuName);
     }
   };
+  
+  const handleNumberClick = (num) => {
+    setInput((prev) => prev + num);
+  };
+
+  const handleBackspace = () => {
+    setInput((prev) => prev.slice(0, -1));
+  };
+
+  const handleClear = () => {
+    setInput('');
+  };
+
+  const handleOk = () => {
+    console.log('Entered value:', input);
+    
+  };
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-r  from-green-500 to-blue-600  flex justify-center items-center p-4">
       <div className="bg-white w-full max-w-[80%] h-[90vh] rounded-lg shadow-lg flex justify-center items-center">
@@ -91,8 +111,83 @@ export default function MainWindow() {
             </button>
           </div>
         </section>
-        <section className="bg-blue-300 w-[45%] h-full flex justify-center items-center">
-          <p>Section 2 (40%)</p>
+        <section className="bg-white-300 w-[45%] h-full flex justify-center items-center">
+          <section className="bg-white-300 w-full h-full flex flex-col p-4">
+            {/* Top sub-section (40%) to display input */}
+            <div className="h-[40%] bg-white-200 rounded flex items-center justify-end text-2xl p-4">
+              {input}
+            </div>
+
+            {/* Bottom sub-section (60%) keypad */}
+            <div className="flex flex-col h-[60%] w-full gap-2">
+              {/* Row 1: Numbers 1-3 + Backspace */}
+              <div className="grid grid-cols-4 gap-2 h-1/4">
+                {[1, 2, 3].map((num) => (
+                  <button
+                    key={num}
+                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                    onClick={() => handleNumberClick(num.toString())}
+                  >
+                    {num}
+                  </button>
+                ))}
+                <button
+                  className="bg-yellow-400 hover:bg-yellow-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
+                  onClick={handleBackspace}
+                >
+                  ←
+                </button>
+              </div>
+
+              {/* Row 2: Numbers 4-6 */}
+              <div className="grid grid-cols-4 gap-2 h-1/4">
+                {[4, 5, 6].map((num) => (
+                  <button
+                    key={num}
+                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                    onClick={() => handleNumberClick(num.toString())}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
+
+              {/* Row 3: Numbers 7-9 */}
+              <div className="grid grid-cols-4 gap-2 h-1/4">
+                {[7, 8, 9].map((num) => (
+                  <button
+                    key={num}
+                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                    onClick={() => handleNumberClick(num.toString())}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
+
+              {/* Row 4: Clear, 0, OK */}
+              <div className="grid grid-cols-4 gap-2 h-1/4">
+                <button
+                  className="bg-red-400 hover:bg-red-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
+                  onClick={handleClear}
+                >
+                  CLEAR
+                </button>
+                <button
+                  className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                  onClick={() => handleNumberClick('0')}
+                >
+                  0
+                </button>
+                <button
+                  className="bg-green-400 hover:bg-green-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
+                  onClick={handleOk}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          </section>
         </section>
         <section className="bg-yellow-300 w-[30%] h-full flex justify-center items-center">
           <p>Section 3 (40%)</p>
