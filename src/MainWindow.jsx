@@ -3,10 +3,6 @@ import menuData from './data/data.json';
 import React, { useState } from 'react';
 
 export default function MainWindow() {
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [selectedMode, setSelectedMode] = useState('btn11');
-  const [selectedModeSub, setSelectedModeSub] = useState('option1');
-  const [results, setResults] = useState([]);
   const btn1 = menuData.menuMain[0];
   const btn2 = menuData.menuMain[1];
   const btn3 = menuData.menuMain[2];
@@ -16,6 +12,11 @@ export default function MainWindow() {
   const Button22 = menuData.subButtons['Button2'][1];
   const Button31 = menuData.subButtons['Button3'][0];
   const Button32 = menuData.subButtons['Button3'][1];
+  const [activeMenu, setActiveMenu] = useState(btn1);
+  const [selectedMode, setSelectedMode] = useState(Button11);
+  const [selectedModeSub, setSelectedModeSub] = useState('option1');
+  const [results, setResults] = useState([]);
+  const [replaceIndex, setReplaceIndex] = useState(0);
 
   const [input, setInput] = useState('');
 
@@ -28,7 +29,13 @@ export default function MainWindow() {
   };
 
   const handleNumberClick = (num) => {
-    setInput((prev) => prev + num);
+    setInput((prev) => {
+      if (prev.length < 4) {
+        return prev + num;
+      } else {
+        return prev.slice(1) + num;
+      }
+    });
   };
 
   const handleBackspace = () => {
@@ -40,7 +47,9 @@ export default function MainWindow() {
   };
 
   const handleOk = () => {
-    console.log('Entered value:', input);
+    if (input === '') return;
+    setResults(() => [`${selectedMode}: ${input.padStart(4, '0')} mm`]);
+    //setInput('');
   };
 
   return (
@@ -123,7 +132,7 @@ export default function MainWindow() {
                 <span className="text-lg font-bold">{selectedMode}</span>
               </div>
               {/* Sub-mode radio buttons */}
-              <div className="h-[60%] flex flex-col gap-2">
+              {/* <div className="h-[60%] flex flex-col gap-2">
                 <label className="flex-1 flex items-center space-x-2 text-xl bg-gray-200 p-3 rounded-lg cursor-pointer hover:bg-gray-300">
                   <input
                     type="radio"
@@ -147,7 +156,7 @@ export default function MainWindow() {
                   />
                   <span>Option 2</span>
                 </label>
-              </div>
+              </div> */}
               {/* Display input from keypad - 20% */}
               <div className="h-[20%] mt-2 text-2xl font-mono flex items-center justify-center">
                 Length: {input.padStart(4, '0')} mm
@@ -161,14 +170,14 @@ export default function MainWindow() {
                 {[1, 2, 3].map((num) => (
                   <button
                     key={num}
-                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-6xl"
                     onClick={() => handleNumberClick(num.toString())}
                   >
                     {num}
                   </button>
                 ))}
                 <button
-                  className="bg-yellow-400 hover:bg-yellow-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
+                  className="bg-yellow-400 hover:bg-yellow-500 rounded-lg text-xl font-bold h-full w-full text-6xl"
                   onClick={handleBackspace}
                 >
                   ←
@@ -180,7 +189,7 @@ export default function MainWindow() {
                 {[4, 5, 6].map((num) => (
                   <button
                     key={num}
-                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-6xl"
                     onClick={() => handleNumberClick(num.toString())}
                   >
                     {num}
@@ -199,14 +208,14 @@ export default function MainWindow() {
                 {[7, 8, 9].map((num) => (
                   <button
                     key={num}
-                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                    className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-6xl"
                     onClick={() => handleNumberClick(num.toString())}
                   >
                     {num}
                   </button>
                 ))}
                 <button
-                  className="bg-green-400 hover:bg-green-500 rounded-lg text-xl font-bold h-full w-full text-4xl"
+                  className="bg-green-400 hover:bg-green-500 rounded-lg text-xl font-bold h-full w-full text-6xl"
                   onClick={handleOk}
                 >
                   OK
@@ -218,7 +227,7 @@ export default function MainWindow() {
               <div className="grid grid-cols-4 gap-2 h-1/4">
                 <div className></div>
                 <button
-                  className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-4xl"
+                  className="bg-gray-300 hover:bg-gray-500 rounded-lg text-xl font-semibold h-full w-full text-6xl"
                   onClick={() => handleNumberClick('0')}
                 >
                   0
